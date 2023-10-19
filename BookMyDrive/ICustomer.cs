@@ -11,5 +11,7 @@ namespace BookMyDrive
         int cutomerId { get; set; }
         string customerName { get; set; }
         string phoneNumber { get; set; }
+
+        string customerType { get; set; }
     }
 }

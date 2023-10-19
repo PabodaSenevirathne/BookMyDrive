@@ -12,10 +12,13 @@ namespace BookMyDrive
         public string customerName { get; set; }
         public string phoneNumber { get; set; }
 
-        public Customer(int customerId, string customerName, string phoneNumber ) {
+        public string customerType { get; set; }
+
+        public Customer(int customerId, string customerName, string phoneNumber,string customerType ) {
             this.cutomerId = customerId;
             this.customerName = customerName;
             this.phoneNumber = phoneNumber;
+            this.customerType = customerType;
             
 
 
