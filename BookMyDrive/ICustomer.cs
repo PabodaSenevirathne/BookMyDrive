@@ -8,7 +8,7 @@ namespace BookMyDrive
 {
     internal interface ICustomer
     {
-        int cutomerId { get; set; }
+        string cutomerId { get; set; }
         string customerName { get; set; }
         string phoneNumber { get; set; }
 

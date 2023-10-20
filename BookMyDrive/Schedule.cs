@@ -19,9 +19,12 @@ namespace BookMyDrive
 
             foreach (Reservation reservation in reservations)
             {
-                Console.WriteLine($"Name: {reservation.cutomerId}");
+                Console.WriteLine($"Customer ID: {new string('X', 3) + reservation.cutomerId.Substring(3)}"); 
                 Console.WriteLine($"Name: {reservation.customerName}");
                 Console.WriteLine($"Phone Number: {reservation.phoneNumber}");
+                Console.WriteLine($"Phone Number: {reservation.customerType}");
+                Console.WriteLine($"CarType: {reservation.carType}");
+                Console.WriteLine($"Additional Service: {reservation.additionalServicesType}");
                 Console.WriteLine($"Total: ${reservation.calculateTotalCost():F2}\n");
 
             }
@@ -30,13 +33,27 @@ namespace BookMyDrive
         public static void CreateReservation()
         {
             Console.Write("Customer Id: ");
-            int customerId = int.Parse(Console.ReadLine());
+            string customerId = Console.ReadLine();
+
+            if (!Customer.IsValidCustomerID(customerId))
+            {
+                Console.WriteLine("Invalid customer ID format. It should be a 6-digit alphanumeric code.");
+                return;
+            }
 
             Console.Write("Name: ");
             string customerName = Console.ReadLine();
 
-            Console.Write("Phone Number: ");
+            //Console.Write("Phone Number: ");
+            //string phoneNumber = Console.ReadLine();
+
+            Console.Write("Phone Number (xxx-xxx-xxxx): ");
             string phoneNumber = Console.ReadLine();
+            if (!Customer.IsValidPhoneNumber(phoneNumber))
+            {
+                Console.WriteLine("Invalid phone number format. It should be in the format 'xxx-xxx-xxxx'.");
+                return;
+            }
 
             Console.WriteLine("Customer Types:");
             Console.WriteLine("Customer Type (0 - Regular, 1 - Premium, 2 - VIP):");
@@ -51,104 +68,72 @@ namespace BookMyDrive
             Console.Write("Choose a car type (1/2/3): ");
 
             int service = int.Parse(Console.ReadLine());
+            string carType;
+
+            switch (service)
+            {
+                case 1:
+                    carType = "Economy";
+                    break;
+                case 2:
+                    
+                    carType = "Standard";
+                 
+                    break;
+                case 3:
+                    carType = "Luxury";
+                   
+                    break;
+                default:
+                    carType = "Invalid";
+                    break;
+
+            }
+
+            Console.WriteLine(carType);
+
             List<int> services = new List<int>();
             services.Add(service);
             Console.WriteLine("Additinal Services:");
 
 
+            decimal additionalServicePrice = 0;
+            string additionalServicesType;
+            switch (customerType)
+            {
+                case "0":
+                    Console.WriteLine("Regular - GPS Navigation - $9.99/day");
+                    additionalServicesType = "GPS Navigation";
+                    additionalServicePrice = 9.99m;
+                    break;
+                case "1":
+                    Console.WriteLine("Premium - Child Car Seat - $14.99/day");
+                    additionalServicesType = "Child Car Seat";
+                    additionalServicePrice = 14.99m;
+                    break;
+                case "2":
+                    Console.WriteLine("VIP - Chauffeur Service - $99.99/day");
+                    additionalServicesType = "Chauffeur Service";
+                    additionalServicePrice = 99.99m;
+                    break;
+                default:
+                    additionalServicesType = "Invalid";
+                    break;
+
+            }
             Console.Write("Do you want this additional service? (Yes/No): ");
             string additionalServices = Console.ReadLine().ToLower();
-            string additionalServicesType;
 
-
-           // List<decimal> additionalServicePrice = new List<decimal>();
-            decimal additionalServicePrice = 0;
-            if (additionalServices == "yes")
-            {
-
-                switch (customerType)
-                {
-                    case "0":
-                        Console.WriteLine("Regular - GPS Navigation - $9.99/day");
-                        additionalServicesType = "GPS Navigation";
-                        additionalServicePrice = 9.99m;
-                        break;
-                    case "1":
-                        Console.WriteLine("Premium - Child Car Seat - $14.99/day");
-                        additionalServicesType = "Child Car Seat";
-                        additionalServicePrice = 14.99m;
-                        break;
-                    case "2":
-                        Console.WriteLine("VIP - Chauffeur Service - $99.99/day");
-                        additionalServicesType = "Chauffeur Service";
-                        additionalServicePrice = 99.99m;
-                        break;
-                }
-
-                ///additionalServicePrice.Add(additionalPrice);
-                //Console.WriteLine($"{additionalPrice}add price");
-                //Console.WriteLine(additionalServicePrice.Count);
-            }
-            else if (additionalServices == "no")
+            if (additionalServices == "no")
             {
                 additionalServices = "None";
 
             }
 
-
-            Reservation reservation = new Reservation(customerId, customerName, customerType, phoneNumber, services, additionalServicePrice);
+            Reservation reservation = new Reservation(customerId, customerName, customerType, phoneNumber, services, additionalServicePrice, carType, additionalServicesType);
             reservations.Add(reservation);
 
             Console.WriteLine("Appointment created successfully!");
-
-            //decimal additionalPrice = 0;
-            //if (customerType == "0")
-            //{
-            //    Console.WriteLine("Regular - GPS Navigation - $9.99/day");
-            //    additionalPrice = 9.99m;
-
-            //}
-            //else if (customerType == "1")
-            //{
-            //    Console.WriteLine("Premium - Child Car Seat - $14.99/day");
-            //    additionalPrice = 14.99m;
-            //}
-            //else
-            //{
-            //    Console.WriteLine("VIP - Chauffeur Service - $99.99/day");
-            //    additionalPrice = 99.99m;
-            //}
-
-            //Console.WriteLine("Do you need additional services(Yes/No)?");
-
-            //List<decimal> additionalServicePrice = new List<decimal>();
-            //string additionalServices = Console.ReadLine();
-
-            //if (additionalServices == "yes")
-            //{
-            //    additionalServicePrice.Add(additionalPrice);
-            //    Console.WriteLine($"{additionalPrice}add price");
-            //}
-
-
-
-
-
-
-
-            //while (true)
-            //{
-
-            //    Console.Write("Service (Regular/ Premium/ VIP): ");
-            //    int service = int.Parse(Console.ReadLine());
-
-            //    if (service == 0)
-            //    {
-            //        break;
-            //    }
-
-            //    services.Add(service);
-            //}
 
         }
 

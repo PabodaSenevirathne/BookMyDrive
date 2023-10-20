@@ -5,20 +5,20 @@
         static void Main(string[] args)
         {
         
-        Program program = new Program();
-            List<Customer> customers = new List<Customer>
-        {
-            new Customer(1, "John Doe", "123-456-7890", "Premium"),
-            new Customer(2, "Alice Smith", "987-654-3210", "VIP"),
-            new Customer(2, "Bob Johnson", "555-123-4567", "Regular")
-        };
+        //Program program = new Program();
+        //    List<Customer> customers = new List<Customer>
+        //{
+        //    new Customer(1, "John Doe", "123-456-7890", "Premium"),
+        //    new Customer(2, "Alice Smith", "987-654-3210", "VIP"),
+        //    new Customer(2, "Bob Johnson", "555-123-4567", "Regular")
+        //};
 
             while (true)
             {
 
                 Console.WriteLine("\nMenu:");
-                Console.WriteLine("1. Create an Reservation");
-                Console.WriteLine("2. List all Reservation");
+                Console.WriteLine("1. List all Reservation");
+                Console.WriteLine("2. Create an Reservation");
                 Console.WriteLine("3. Clear all Reservations");
                 Console.WriteLine("4. Exit");
 
@@ -32,11 +32,11 @@
                 switch (option)
                 {
                     case 1:
-                        Schedule.CreateReservation();
+                        Schedule.listAllReservations();
                         break;
 
                     case 2:
-                        Schedule.listAllReservations();
+                        Schedule.CreateReservation();
                         break;
 
                     case 3:

@@ -12,12 +12,18 @@ namespace BookMyDrive
         public List<int> Services { get; set; }
         public decimal additionalServicePrice { get; set; }
 
+        public string additionalServicesType { get; set; }
+
+        public string carType { get; set; }
+
         //public List<decimal> additionalServicePrice { get; set; }
-        public Reservation(int customerId, string customerName, string phoneNumber, string customerType, List<int> services, decimal additionalServicePrice ) : base(customerId, customerName, phoneNumber, customerType)
+        public Reservation(string customerId, string customerName, string phoneNumber, string customerType, List<int> services, decimal additionalServicePrice, string carType, string additionalServicesType ) : base(customerId, customerName, phoneNumber, customerType)
         {
 
             this.Services = services;
             this.additionalServicePrice = additionalServicePrice;
+            this.additionalServicesType = additionalServicesType;
+            this.carType = carType;
         }
 
         //public decimal getAdditionalServicePrice()
@@ -39,6 +45,7 @@ namespace BookMyDrive
         public decimal CalculateBasicCost()
         {
             decimal total = 0;
+            
             foreach (int service in Services)
             {
                 switch (service)
@@ -65,8 +72,8 @@ namespace BookMyDrive
 
             decimal basicCost = CalculateBasicCost();
             //decimal additionalServiceCost = getAdditionalServicePrice();
-
-            return basicCost + additionalServicePrice;
+            basicCost = basicCost + additionalServicePrice;
+            return basicCost;
         }
 
 
