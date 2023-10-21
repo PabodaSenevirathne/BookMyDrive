@@ -12,7 +12,6 @@ namespace BookMyDrive
         public string cutomerId { get; set; }
         public string customerName { get; set; }
         public string phoneNumber { get; set; }
-
         public string customerType { get; set; }
 
         public Customer(string customerId, string customerName, string phoneNumber,string customerType ) {
@@ -20,13 +19,11 @@ namespace BookMyDrive
             this.customerName = customerName;
             this.phoneNumber = phoneNumber;
             this.customerType = customerType;
-           
-        
         }
 
         public static bool IsValidPhoneNumber(string phoneNumber)
         {
-            //(XXX) XXX-XXXX 
+            //Phone number format - (XXX) XXX-XXXX 
             if (phoneNumber.Length != 14)
             {
                 return false;
@@ -64,15 +61,13 @@ namespace BookMyDrive
             return true;
         }
 
-
         public static bool IsValidCustomerID(string customerId)
         {
             if (string.IsNullOrEmpty(customerId) || customerId.Length != 6)
             {
                 return false;
             }
-
-            // Use a regular expression to validate alphanumeric code
+            //regular expression to validate alphanumeric code
             return Regex.IsMatch(customerId, "^[a-zA-Z0-9]*$");
         }
 

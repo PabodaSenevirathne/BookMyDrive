@@ -14,26 +14,45 @@ namespace BookMyDrive
 
         public static void listAllReservations()
         {
+            //hardcoded customers
+            List<Customer> customers = new List<Customer>
+             {
+             new Customer("AB8123", "Paboda Senevirathne", "123-456-7890", "2"),
+             new Customer("XY8456", "Alice Smith", "987-654-3210", "2"),
+             new Customer("D88789", "Bob Johnson", "555-123-4567", "0")
+              };
 
+            // Adding the hardcoded customers to the first 3 slots of the reservation list
+            if (reservations.Count == 0)
+            {
+                for (int i = 0; i < customers.Count; i++)
+                {
+                    var customer = customers[i];
+                    reservations.Add(new Reservation(customer.cutomerId, customer.customerName, customer.customerType, customer.phoneNumber, new List<int> { 1, 2 }, 29.99m, "Economy", "None"));
+                }
+            }
+            
+
+            //list all reservations
             Console.WriteLine("List of all appointments:");
-
             foreach (Reservation reservation in reservations)
             {
                 Console.WriteLine($"Customer ID: {new string('X', 3) + reservation.cutomerId.Substring(3)}"); 
                 Console.WriteLine($"Name: {reservation.customerName}");
                 Console.WriteLine($"Phone Number: {reservation.phoneNumber}");
-                Console.WriteLine($"Phone Number: {reservation.customerType}");
+                Console.WriteLine($"Customer type: {reservation.customerType}");
                 Console.WriteLine($"CarType: {reservation.carType}");
                 Console.WriteLine($"Additional Service: {reservation.additionalServicesType}");
                 Console.WriteLine($"Total: ${reservation.calculateTotalCost():F2}\n");
-
             }
         }
 
+        //create reservations
         public static void CreateReservation()
         {
+            //get customer Id
             Console.Write("Customer Id: ");
-            string customerId = Console.ReadLine();
+            string customerId = Console.ReadLine() ?? "default";
 
             if (!Customer.IsValidCustomerID(customerId))
             {
@@ -41,33 +60,33 @@ namespace BookMyDrive
                 return;
             }
 
+            //get customer Name
             Console.Write("Name: ");
-            string customerName = Console.ReadLine();
+            string customerName = Console.ReadLine() ?? "default";
 
-            //Console.Write("Phone Number: ");
-            //string phoneNumber = Console.ReadLine();
-
-            Console.Write("Phone Number (xxx-xxx-xxxx): ");
-            string phoneNumber = Console.ReadLine();
+            //get phone number
+            Console.Write("Phone Number (XXX) XXX-XXXX: ");
+            string phoneNumber = Console.ReadLine() ?? "default";
+            //validate phone number
             if (!Customer.IsValidPhoneNumber(phoneNumber))
             {
-                Console.WriteLine("Invalid phone number format. It should be in the format 'xxx-xxx-xxxx'.");
+                Console.WriteLine("Invalid phone number format. It should be in the format '(XXX) XXX-XXXX'.");
                 return;
             }
 
+            //get customer type
             Console.WriteLine("Customer Types:");
             Console.WriteLine("Customer Type (0 - Regular, 1 - Premium, 2 - VIP):");
-            string customerType = Console.ReadLine();
+            string customerType = Console.ReadLine() ?? "default";
 
-            Customer customer = new Customer(customerId, customerName, phoneNumber, customerType);
-
+            //get car type
             Console.WriteLine("Car Types:");
             Console.WriteLine("1 - Economy Car Rental - $29.99/day");
             Console.WriteLine("2 - Standard Car Rental - $49.99/day");
             Console.WriteLine("3 - Luxury Car Rental - $79.99/day");
-            Console.Write("Choose a car type (1/2/3): ");
+            Console.Write("Choose the number corresponding to the car type (1/2/3): ");
 
-            int service = int.Parse(Console.ReadLine());
+            int service = int.Parse(Console.ReadLine() ?? "default");
             string carType;
 
             switch (service)
@@ -87,15 +106,13 @@ namespace BookMyDrive
                 default:
                     carType = "Invalid";
                     break;
-
             }
-
-            Console.WriteLine(carType);
 
             List<int> services = new List<int>();
             services.Add(service);
-            Console.WriteLine("Additinal Services:");
 
+            //get additional services
+            Console.WriteLine("Additinal Services:");
 
             decimal additionalServicePrice = 0;
             string additionalServicesType;
@@ -119,24 +136,24 @@ namespace BookMyDrive
                 default:
                     additionalServicesType = "Invalid";
                     break;
-
             }
-            Console.Write("Do you want this additional service? (Yes/No): ");
-            string additionalServices = Console.ReadLine().ToLower();
 
+            Console.Write("Do you want this additional service? (Yes/No): ");
+            string additionalServices = Console.ReadLine()?.ToLower() ?? "default";
             if (additionalServices == "no")
             {
-                additionalServices = "None";
-
+                additionalServicesType = "None";
+                additionalServicePrice = 0;
             }
 
+            //add user inputs to the Reservation list
             Reservation reservation = new Reservation(customerId, customerName, customerType, phoneNumber, services, additionalServicePrice, carType, additionalServicesType);
             reservations.Add(reservation);
 
-            Console.WriteLine("Appointment created successfully!");
-
+            Console.WriteLine("Thank you! The reservation was successful.");
         }
 
+        //reset reservation
         public static void ResetReservation()
         {
             reservations.Clear();
