@@ -32,7 +32,6 @@ namespace BookMyDrive
                 }
             }
             
-
             //list all reservations
             Console.WriteLine("List of all appointments:");
             foreach (Reservation reservation in reservations)
